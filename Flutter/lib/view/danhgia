@@ -1,0 +1,104 @@
+import 'package:flutter/material.dart';
+
+class DanhGiaSanPham extends StatelessWidget {
+  const DanhGiaSanPham({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Đánh giá của tôi"),
+        backgroundColor: Colors.orange,
+      ),
+      body: DefaultTabController(
+        length: 2,
+        child: Column(
+          children: [
+            TabBar(
+              labelColor: Colors.orange,
+              unselectedLabelColor: Colors.grey,
+              indicatorColor: Colors.orange,
+              tabs: [
+                Tab(text: "Chưa đánh giá"),
+                Tab(text: "Đã đánh giá"),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  Center(
+                    child: Text(
+                      "Không có sản phẩm nào để đánh giá",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  ReviewList(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ReviewList extends StatelessWidget {
+  final List<Map<String, String>> reviews = [
+    {
+      "title": "Laptop ASUS Vivo 15 X... ",
+      "date": "21-11-2023",
+      "rating": "4",
+      "comment": "Suất sắt",
+    },
+    {
+      "title": "Laptop ASUA TUF Gamming 15 X...",
+      "date": "05-08-2023",
+      "rating": "3",
+      "comment": "Cảm ơn anh đã ủng hộ!",
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: reviews.length,
+      itemBuilder: (context, index) {
+        final review = reviews[index];
+        return Card(
+          margin: EdgeInsets.all(8),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  review["title"]!,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  "Ngày: ${review["date"]}",
+                  style: TextStyle(color: Colors.grey),
+                ),
+                SizedBox(height: 8),
+                Row(
+                  children: List.generate(
+                    int.parse(review["rating"]!),
+                    (index) => Icon(Icons.star, color: Colors.orange, size: 20),
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  review["comment"]!,
+                  style: TextStyle(fontSize: 16),
+                ),
+                SizedBox(height: 8),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
